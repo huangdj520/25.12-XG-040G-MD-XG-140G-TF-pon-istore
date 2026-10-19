@@ -1,15 +1,21 @@
 #科学插件调整
 CONFIG_PACKAGE_luci-theme-bootstrap=y
+#主题
+CONFIG_PACKAGE_luci-theme-aurora=y
+CONFIG_PACKAGE_luci-app-aurora-config=y
 #lucky
 CONFIG_PACKAGE_luci-app-lucky=n
 #增加插件
 CONFIG_PACKAGE_luci-app-appfilter=y
-CONFIG_PACKAGE_luci-app-openlist=y
-CONFIG_PACKAGE_luci-app-zerotier=y
+#iStore 商店(iStoreX 首页)
+CONFIG_PACKAGE_luci-app-store=y
 CONFIG_PACKAGE_luci-app-filemanager=y
 CONFIG_PACKAGE_luci-app-samba4=y
 #CONFIG_PACKAGE_luci-app-aria2=y
 CONFIG_PACKAGE_luci-app-wolplus=y
+#vlmcsd KMS 激活服务器
+CONFIG_PACKAGE_vlmcsd=y
+CONFIG_PACKAGE_luci-app-vlmcsd=y
 #删除插件
 CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
 CONFIG_PACKAGE_luci-app-ddns=y
@@ -20,6 +26,12 @@ CONFIG_FEED_video=n
 CONFIG_TARGET_MULTI_PROFILE=y
 CONFIG_TARGET_PER_DEVICE_ROOTFS=y
 CONFIG_TARGET_ROOTFS_INITRAMFS=n
+#dae 依赖(编译依赖,供后期按需安装)
+CONFIG_PACKAGE_kmod-sched-bpf=y
+CONFIG_PACKAGE_kmod-sched-core=y
+CONFIG_PACKAGE_kmod-veth=y
+CONFIG_PACKAGE_kmod-xdp-sockets-diag=y
+CONFIG_PACKAGE_ca-bundle=y
 #内核调整
 CONFIG_PACKAGE_kmod-ata-ahci=y
 CONFIG_PACKAGE_kmod-ata-core=y
