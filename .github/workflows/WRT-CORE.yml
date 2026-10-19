@@ -212,6 +212,23 @@ jobs:
             echo "WRT_KVER=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^kernel - \K[\d\.]+' {} \;)" >> $GITHUB_ENV
             echo "WRT_LIST=$(find ./bin/targets/ -type f -name "*.manifest" -exec grep -oP '^luci-(app|theme)[^ ]*' {} \; | tr '\n' ' ')" >> $GITHUB_ENV
 
+            # 生成编译内容摘要(按类别分组)
+            MANIFEST=$(find ./bin/targets/ -type f -name "*.manifest" | head -1)
+            {
+              echo "### 📦 内置 LuCI 应用"
+              grep -oP '^luci-app[^ ]*' "$MANIFEST" | sort | awk '{print "- "$0}'
+              echo ""
+              echo "### 🎨 主题"
+              grep -oP '^luci-theme[^ ]*' "$MANIFEST" | sort | awk '{print "- "$0}'
+              echo ""
+              echo "### 🧩 核心内核模块(kmod)"
+              grep -oP '^kmod-[^ ]*' "$MANIFEST" | sort | awk '{print "- "$0}'
+              echo ""
+              echo "### 🛠 常用组件"
+              grep -oP '^(wireguard|zerotier|tailscale|openclash|istore|zram|dae|vlmcsd|aria2|qbittorrent|homeproxy|passwall|mosdns|sing-box|ddns-go|lucky|qmodem)[^ ]*' "$MANIFEST" | sort | awk '{print "- "$0}'
+            } > ./upload/编译内容摘要.md
+            echo "summary file generated"
+
             find ./bin/targets/ -iregex ".*\(buildinfo\|json\|sha256sums\|packages\)$" -exec rm -rf {} +
 
             for FILE in $(find ./bin/targets/ -type f -iname "*$WRT_TARGET*") ; do
@@ -232,24 +249,23 @@ jobs:
           tag_name: ${{env.WRT_CONFIG}}-${{env.WRT_INFO}}-${{env.WRT_BRANCH}}-${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，刷就完事了！
+            这个固件包内含多个设备，请选择你需要的设备固件刷写！
 
-            全系带开源硬件加速，别问了！
+            ## 本次编译内容
+            内核版本：**${{env.WRT_KVER}}** ｜ 设备主机名：**${{env.WRT_NAME}}**
+
+            详细按类别清单见随包附件《编译内容摘要.md》。
+
+            ---
+
+            ### 📦 内置 LuCI 应用
+            ${{env.WRT_LIST}}
+
+            ---
 
             源码：${{env.WRT_REPO}}
             分支：${{env.WRT_BRANCH}}
             提交：${{env.WRT_HASH}}
-
-            配置：${{env.WRT_CONFIG}}
-            平台：${{env.WRT_TARGET}}
-
-            登录地址：${{env.WRT_IP}}
-            登录密码：${{env.WRT_PW}}
-
-            WIFI名称：${{env.WRT_SSID}}
-            WIFI密码：${{env.WRT_WORD}}
-
-            内核版本：${{env.WRT_KVER}}
-            插件列表：${{env.WRT_LIST}}
+            配置：${{env.WRT_CONFIG}} ｜ 平台：${{env.WRT_TARGET}}
+            登录地址：${{env.WRT_IP}} ｜ 登录密码：${{env.WRT_PW}}
+            WIFI名称：${{env.WRT_SSID}} ｜ WIFI密码：${{env.WRT_WORD}}
