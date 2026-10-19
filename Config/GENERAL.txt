@@ -30,6 +30,8 @@ CONFIG_TARGET_ROOTFS_INITRAMFS=n
 CONFIG_PACKAGE_kmod-sched-bpf=y
 CONFIG_PACKAGE_kmod-sched-core=y
 CONFIG_PACKAGE_kmod-veth=y
+#启用内核 XDP sockets 支持(供 kmod-xdp-sockets-diag)
+CONFIG_KERNEL_XDP_SOCKETS=y
 CONFIG_PACKAGE_kmod-xdp-sockets-diag=y
 CONFIG_PACKAGE_ca-bundle=y
 #内核调整
