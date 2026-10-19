@@ -83,13 +83,12 @@ UPDATE_PACKAGE "luci-app-airoha-npu" "bingoguo93/luci-app-airoha-npu" "main"
 UPDATE_PACKAGE "luci-app-lucky" "sirpdboy/luci-app-lucky" "main"
 #UPDATE_PACKAGE "luci-app-tailscale-community" "Tokisaki-Galaxy/luci-app-tailscale-community" "master" "" "luci-app-tailscale-community"
 
-# iStore 商店(iStoreX 首页+应用商店)及依赖
-if [ ! -d *"luci-app-store"* ]; then
-	git clone --depth=1 --single-branch --branch main https://github.com/linkease/istore.git istore-tmp
-	cp -rf istore-tmp/luci/luci-app-store istore-tmp/luci/luci-lib-taskd istore-tmp/luci/luci-lib-xterm istore-tmp/luci/taskd ./
-	rm -rf istore-tmp
-	echo "istore has been cloned!"
-fi
+# iStore 商店(iStoreX 首页+应用商店)及依赖 —— 统一从 kenzok8/small-package 拉取
+UPDATE_PACKAGE "quickstart" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-istorex" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-app-store" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-lib-taskd" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "taskd" "kenzok8/small-package" "main" "pkg"
 
 #更新软件包版本
 UPDATE_VERSION() {

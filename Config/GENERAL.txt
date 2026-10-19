@@ -7,7 +7,9 @@ CONFIG_PACKAGE_luci-app-aurora-config=y
 CONFIG_PACKAGE_luci-app-lucky=n
 #增加插件
 CONFIG_PACKAGE_luci-app-appfilter=y
-#iStore 商店(iStoreX 首页)
+#iStore 商店(iStoreX 首页+应用商店)
+CONFIG_PACKAGE_luci-app-istorex=y
+CONFIG_PACKAGE_luci-app-quickstart=y
 CONFIG_PACKAGE_luci-app-store=y
 CONFIG_PACKAGE_luci-app-filemanager=y
 CONFIG_PACKAGE_luci-app-samba4=y
