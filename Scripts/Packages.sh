@@ -88,6 +88,7 @@ UPDATE_PACKAGE "quickstart" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "luci-app-istorex" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "luci-app-store" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "luci-lib-taskd" "kenzok8/small-package" "main" "pkg"
+UPDATE_PACKAGE "luci-lib-xterm" "kenzok8/small-package" "main" "pkg"
 UPDATE_PACKAGE "taskd" "kenzok8/small-package" "main" "pkg"
 
 #更新软件包版本
