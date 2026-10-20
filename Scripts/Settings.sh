@@ -11,6 +11,25 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $(find ./feeds/luci/modules/luci-m
 #添加编译日期标识及构建者
 sed -i "s/(\(luciversion || ''\))/(\1) + (' \/ $WRT_DATE \/ build by zk6685')/g" $(find ./feeds/luci/modules/luci-mod-status/ -type f -name "10_system.js")
 
+# 概览页 Firmware Version 字段包成本仓库超链接(构造 E('a') 节点, 避免被 E() 转义为纯文本)
+python3 - <<'PYEOF'
+import re, glob, sys
+for path in glob.glob("./feeds/luci/modules/luci-mod-status/**/10_system.js", recursive=True):
+    try:
+        s = open(path).read()
+    except Exception as e:
+        print("skip %s: %s" % (path, e)); continue
+    pat = re.compile(r"(_\('Firmware Version'\),\s*)(.+?),\n", re.M)
+    new = pat.sub(
+        lambda m: m.group(1) + "E('a', { 'href': 'https://github.com/zk6685/zk-daepon', 'target': '_blank' }, [ " + m.group(2) + " ]),\n",
+        s)
+    if new != s:
+        open(path, 'w').write(new)
+        print("patched: %s" % path)
+    else:
+        print("no change: %s" % path)
+PYEOF
+
 WIFI_SH=$(find ./target/linux/{mediatek/filogic,qualcommax}/base-files/etc/uci-defaults/ -type f -name "*set-wireless.sh" 2>/dev/null)
 WIFI_UC="./package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc"
 if [ -f "$WIFI_SH" ]; then
