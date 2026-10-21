@@ -6,7 +6,7 @@
 
 ## ✨ 本固件特征（AIR-ONU 编译流）
 
-基于 **pbs05/ponwrt**（PON 专用源码）master 分支，内核 **6.18.55**，为贝尔 **XG-040G-MD（U-Boot + UBI 分区）** 光猫定制，输出 **ITB（.itb）** 镜像。设备名：**daepon**，登录地址 **192.168.1.1**（默认无密码），版本标识带 `build by zk6685`。
+基于 **pbs05/ponwrt**（PON 专用源码）master 分支，内核 **6.18.55**，面向 **airoha/an7581 平台** 全系光猫定制，输出 **ITB（.itb）** 镜像。固件统一以 **`zk-daepon-`** 为文件名前缀。设备名：**daepon**，登录地址 **192.168.1.1**（默认无密码），版本标识带 `build by zk6685`。
 
 ### 📡 光口 PON 全套
 - kmod-airoha-xpon / kmod-airoha-pon-frontend（PON 底层驱动）
@@ -33,6 +33,25 @@
 - zram-swap + kmod-zram（内存压缩交换）
 - luci-app-appfilter / luci-app-filemanager / luci-app-samba4 / luci-app-wolplus / luci-app-ddns
 
+### 📦 支持机型（同平台全系一次编译产出）
+| 品牌 | 机型 | 变体 |
+|---|---|---|
+| **Nokia** | XG-040G-MD | ubi / ubi-usb-sfp |
+| **Nokia** | XG-040G-TF | ubi |
+| **烽火** FiberHome | HG5382A | — |
+| **烽火** FiberHome | HG5585F | ct / cu |
+| **Gemtek** | XG2010G | — |
+| **Unionman** | UNG00A | — |
+| **中兴 ZNXT** | ZN504XG-D / ZN515XG-D | — |
+
+### 🏷️ 固件命名规则
+```
+zk-daepon-<平台设备>-squashfs-sysupgrade-<源码>-<分支>-<日期>.itb
+```
+例：`zk-daepon-airoha-an7581-nokia_xg-040g-md-ubi-squashfs-sysupgrade-pbs05-master-26.10.22-XX.XX.XX.itb`
+
+> ⚠️ 各机型固件虽共用同一内核/插件/PON 配置，但**内存颗粒、分区布局、外设可能不同，切勿混刷**，请按设备名选择对应 `.itb`。
+
 ---
 
 ## ⚠️ 刷机前须知
@@ -42,7 +61,7 @@
 详细说明：
 https://www.right.com.cn/forum/thread-8453612-1-1.html
 
-### 支持设备
+### 支持设备（传统分区版）
 
 四个固件通用，设备名称只是区分不同功能。
 
